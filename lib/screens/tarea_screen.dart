@@ -1,3 +1,4 @@
+// tarea_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import '../widgets/card_tarea.dart';
@@ -35,13 +36,16 @@ class _TaskScreenState extends State<TaskScreen>
     setState(() {
       _tasks.insert(0, {'title': task, 'done': false});
     });
+    // Reversa la animación del ícono cuando se agrega una tarea
+    _iconController.reverse(); // Comentario agregado
   }
 
   void _toggleComplete(int index) {
     setState(() {
       _tasks[index]['done'] = !_tasks[index]['done'];
     });
-    _iconController.forward(from: 0);
+    // Inicia animación del ícono al marcar como completado
+    _iconController.forward(from: 0); // Comentario agregado
   }
 
   void _removeTask(int index) {
@@ -51,6 +55,8 @@ class _TaskScreenState extends State<TaskScreen>
   }
 
   void _showAddTaskSheet() {
+    // Inicia animación al mostrar el modal
+    _iconController.forward(); // Comentario agregado
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -69,6 +75,7 @@ class _TaskScreenState extends State<TaskScreen>
           children: [
             const Header(),
             Expanded(
+              // Previene que las animaciones se repitan al hacer scroll
               child: AnimationLimiter(
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 8),
@@ -101,12 +108,11 @@ class _TaskScreenState extends State<TaskScreen>
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddTaskSheet,
         backgroundColor: Colors.deepPurple,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        // Icono animado para mostrar estado (agregar/calendario)
         child: AnimatedIcon(
           icon: AnimatedIcons.add_event,
-          progress: _iconController,
+          progress: _iconController, // Comentario agregado
         ),
       ),
     );
