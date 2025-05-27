@@ -107,7 +107,7 @@ class _TaskScreenState extends State<TaskScreen>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddTaskSheet,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: const Color.fromARGB(255, 31, 20, 49),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         // Icono animado para mostrar estado (agregar/calendario)
         child: AnimatedIcon(

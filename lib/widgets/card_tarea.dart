@@ -22,19 +22,24 @@ class TaskCard extends StatelessWidget {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 400),
       opacity: isDone ? 0.6 : 1.0,
+      //  Cambio de opacidad cuando se marca como completado
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isDone ? Colors.green.shade100 : Colors.white,
+          color:
+              isDone
+                  ? Colors.green.shade100
+                  : const Color.fromARGB(255, 150, 133, 133),
+          //  Cambio de color cuando se marca como completado
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
               blurRadius: 8,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: ListTile(
@@ -45,6 +50,7 @@ class TaskCard extends StatelessWidget {
               builder: (context, child) {
                 return Transform.rotate(
                   angle: isDone ? iconRotation.value * pi : 0,
+                  //  Rotación de ícono al marcar tarea como completada
                   child: Icon(
                     isDone ? Icons.check_circle : Icons.radio_button_unchecked,
                     color: isDone ? Colors.green : Colors.grey,
