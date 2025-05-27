@@ -22,7 +22,7 @@ class TaskCard extends StatelessWidget {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 400),
       opacity: isDone ? 0.6 : 1.0,
-      //  Cambio de opacidad cuando se marca como completado
+
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -30,9 +30,14 @@ class TaskCard extends StatelessWidget {
         decoration: BoxDecoration(
           color:
               isDone
-                  ? Colors.green.shade100
-                  : const Color.fromARGB(255, 150, 133, 133),
-          //  Cambio de color cuando se marca como completado
+                  ? const Color.fromARGB(
+                    255,
+                    226,
+                    130,
+                    207,
+                  ) // Color rosa cuando la tarea está completada 26 de mayo
+                  : Colors
+                      .orangeAccent, //  Color naranja cuando la tarea es nueva 26 de mayo
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
@@ -49,11 +54,16 @@ class TaskCard extends StatelessWidget {
               animation: iconRotation,
               builder: (context, child) {
                 return Transform.rotate(
-                  angle: isDone ? iconRotation.value * pi : 0,
-                  //  Rotación de ícono al marcar tarea como completada
+                  angle:
+                      isDone
+                          ? pi
+                          : 0, // Solo gira 180° cuando está completada 26 de mayo
                   child: Icon(
                     isDone ? Icons.check_circle : Icons.radio_button_unchecked,
-                    color: isDone ? Colors.green : Colors.grey,
+                    color:
+                        isDone
+                            ? const Color.fromARGB(255, 37, 124, 223)
+                            : const Color.fromARGB(255, 97, 104, 58),
                   ),
                 );
               },

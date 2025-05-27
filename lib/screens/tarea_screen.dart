@@ -56,7 +56,7 @@ class _TaskScreenState extends State<TaskScreen>
 
   void _showAddTaskSheet() {
     // Inicia animación al mostrar el modal
-    _iconController.forward(); // Comentario agregado
+    _iconController.forward();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -88,12 +88,50 @@ class _TaskScreenState extends State<TaskScreen>
                       child: SlideAnimation(
                         verticalOffset: 50.0,
                         child: FadeInAnimation(
-                          child: TaskCard(
-                            title: task['title'],
-                            isDone: task['done'],
-                            onToggle: () => _toggleComplete(index),
-                            onDelete: () => _removeTask(index),
-                            iconRotation: _iconController,
+                          child: Dismissible(
+                            //Nueva seccion 27 de mayo
+                            key: ValueKey(task['title']),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (direction) {
+                              Future.delayed(
+                                const Duration(milliseconds: 300),
+                                () {
+                                  if (index < _tasks.length) {
+                                    _removeTask(index);
+                                  }
+                                },
+                              );
+                            },
+                            background: Container(
+                              color: const Color.fromARGB(
+                                255,
+                                207,
+                                136,
+                                131,
+                              ), // Fondo rojo al deslizar 27 de mayo
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              child: TaskCard(
+                                key: ValueKey(task['title']),
+                                title: task['title'],
+                                isDone: task['done'],
+                                onToggle: () => _toggleComplete(index),
+                                onDelete: () => _removeTask(index),
+                                iconRotation: _iconController,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -107,12 +145,9 @@ class _TaskScreenState extends State<TaskScreen>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddTaskSheet,
-        backgroundColor: const Color.fromARGB(255, 31, 20, 49),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        // Icono animado para mostrar estado (agregar/calendario)
         child: AnimatedIcon(
           icon: AnimatedIcons.add_event,
-          progress: _iconController, // Comentario agregado
+          progress: _iconController,
         ),
       ),
     );
